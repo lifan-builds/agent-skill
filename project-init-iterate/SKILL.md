@@ -1,5 +1,5 @@
 ---
-name: project-docs
+name: project-init-iterate
 description: >
   Initialize and maintain project context documents (AGENTS.md, PLANS.md, README.md)
   following OpenAI Agents SDK conventions. Use when starting a new project, scaffolding

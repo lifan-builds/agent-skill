@@ -6,7 +6,7 @@ A curated collection of AI agent skills — reusable instruction sets that give 
 
 | Skill | Description |
 | ----- | ----------- |
-| [`project-docs`](project-docs/) | Generate and maintain project context documents (`AGENTS.md`, `PLANS.md`, `README.md`) following OpenAI Agents SDK conventions |
+| [`project-init-iterate`](project-init-iterate/) | Generate and maintain project context documents (`AGENTS.md`, `PLANS.md`, `README.md`) following OpenAI Agents SDK conventions |
 
 ## What Is a Skill?
 
@@ -26,11 +26,11 @@ Copy individual skill folders into your agent's skills directory:
 
 ```bash
 # Copy a single skill
-cp -r project-docs/ ~/.cursor/skills/project-docs/
+cp -r project-init-iterate/ ~/.cursor/skills/project-init-iterate/
 
 # Or clone the whole repo and symlink
 git clone https://github.com/fantasy-cc/agent-skill.git ~/agent-skills
-ln -s ~/agent-skills/project-docs ~/.cursor/skills/project-docs
+ln -s ~/agent-skills/project-init-iterate ~/.cursor/skills/project-init-iterate
 ```
 
 ## Contributing

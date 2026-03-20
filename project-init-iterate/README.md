@@ -1,4 +1,4 @@
-# project-docs
+# project-init-iterate
 
 Generate and maintain three core project context documents — `AGENTS.md`, `PLANS.md`, and `README.md` — following [OpenAI Agents SDK](https://openai.github.io/openai-agents-python/) conventions.
 
