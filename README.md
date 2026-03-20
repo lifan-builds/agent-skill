@@ -22,16 +22,27 @@ skill-name/
 
 ## Installation
 
-Copy individual skill folders into your agent's skills directory:
+We provide an `install.sh` script to install skills into your project or globally for different IDEs. The script supports `cursor`, `claude`, and `antigravity`.
 
 ```bash
-# Copy a single skill
-cp -r project-init-iterate/ ~/.cursor/skills/project-init-iterate/
-
-# Or clone the whole repo and symlink
+# 1. Clone the repository
 git clone https://github.com/fantasy-cc/agent-skill.git ~/agent-skills
-ln -s ~/agent-skills/project-init-iterate ~/.cursor/skills/project-init-iterate
+cd ~/agent-skills
+
+# 2. Install a skill for a specific IDE (Local to your current project)
+./install.sh <skill-name> <ide>
+
+# Example: Install to the current project's .cursor/skills/ directory
+./install.sh project-init-iterate cursor
+
+# 3. Install globally to your home directory (e.g. ~/.cursor/skills/)
+./install.sh project-init-iterate cursor --global
 ```
+
+### Supported IDEs
+- **cursor**: Installs to `.cursor/skills/` (local) or `~/.cursor/skills/` (global)
+- **claude**: Installs to `.claude/skills/` (local) or `~/.claude/skills/` (global)
+- **antigravity**: Installs to `.agent/skills/` (local) or `~/.gemini/antigravity/skills/` (global)
 
 ## Contributing
 
