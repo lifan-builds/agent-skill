@@ -1,0 +1,49 @@
+lockfile_version: '1'
+generated_at: '2026-03-23T00:21:25.245211+00:00'
+apm_version: 0.8.3
+dependencies:
+- repo_url: _local/project-init-iterate
+  package_type: claude_skill
+  deployed_files:
+  - .claude/skills/project-init-iterate
+  - .cursor/skills/project-init-iterate
+  - .github/skills/project-init-iterate
+  source: local
+  local_path: ./project-init-iterate
+- repo_url: obra/superpowers
+  host: github.com
+  resolved_commit: 8ea39819eed74fe2a0338e71789f06b30e953041
+  package_type: hook_package
+  deployed_files:
+  - .github/hooks/superpowers-hooks-cursor.json
+  - .github/hooks/superpowers-hooks.json
+  content_hash: sha256:b1182e9db82aeb5daeb7833807cd4db63b2f13efee99bfa88abd0bcc65635cb0
+mcp_servers:
+- github-mcp
+- playwright
+- sequential-thinking
+mcp_configs:
+  github-mcp:
+    name: github-mcp
+    transport: stdio
+    args:
+    - -y
+    - '@modelcontextprotocol/server-github'
+    registry: false
+    command: npx
+  playwright:
+    name: playwright
+    transport: stdio
+    args:
+    - -y
+    - '@anthropic-ai/mcp-server-playwright'
+    registry: false
+    command: npx
+  sequential-thinking:
+    name: sequential-thinking
+    transport: stdio
+    args:
+    - -y
+    - '@modelcontextprotocol/server-sequential-thinking'
+    registry: false
+    command: npx

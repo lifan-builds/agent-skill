@@ -11,3 +11,14 @@ Thumbs.db
 
 # Misc
 .env
+
+
+# APM dependencies
+apm_modules/
+
+# APM compiled outputs (reproducible via `apm install`)
+.claude/
+.cursor/
+.github/
+.agent/
+.vscode/mcp.json

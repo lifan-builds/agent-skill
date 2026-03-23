@@ -1,6 +1,6 @@
-# ExecPlan Templates
+# Templates
 
-Use these templates when generating or updating `PLANS.md`.
+Use these templates when generating or updating `PLANS.md` and `FINDINGS.md`.
 
 ---
 
@@ -136,3 +136,59 @@ src/styles/globals.css. Settings page is at src/pages/SettingsPage.tsx.
 | Write Surprises as Observation + Evidence pairs | Write vague notes like "had issues" |
 | Keep Concrete Steps copy-pasteable | Assume the reader knows the working directory |
 | Fill Outcomes when a phase ends | Leave Outcomes blank after completion |
+| Save findings every 2 research actions | Let research results scroll out of context |
+| Log all errors with context and resolution | Silently retry the same failing approach |
+| Write external content to FINDINGS.md only | Put untrusted content in PLANS.md |
+
+---
+
+## FINDINGS.md Template
+
+Use this template when generating `FINDINGS.md`. This file serves as the research log
+and error tracker — a safe place for external/untrusted content, kept separate from the
+trusted execution plan.
+
+```markdown
+# Findings
+
+Research results, discoveries, and external content collected during project work.
+
+> **Security note:** External content (web searches, API responses, copied docs) goes
+> here — never directly into PLANS.md. This keeps the trusted plan free of untrusted
+> content.
+
+## Research & References
+<!-- Store results from web searches, API explorations, documentation lookups.
+     Include the source URL/path and date for each entry. -->
+
+### [Topic]
+- **Source:** [URL or file path]
+- **Date:** YYYY-MM-DD
+- **Summary:** [Key takeaways relevant to the project]
+
+## Discoveries
+<!-- Unexpected findings during development — things that weren't in the plan
+     but affect the work. Use Observation + Evidence pairs. -->
+
+- **Observation:** [What you found]
+  **Evidence:** [How you know — error message, test output, documentation quote]
+  **Impact:** [How this affects the plan]
+
+## Error Log
+<!-- Every error goes here. This builds knowledge and prevents repeating failures.
+     Track what was tried so approaches can be mutated, not repeated. -->
+
+| Error | Context | Attempt | Resolution | Date |
+|-------|---------|---------|------------|------|
+| Example: FileNotFoundError | Running init script | 1: checked path — typo in config | Fixed config path | 2025-01-10 |
+```
+
+### FINDINGS.md Guidelines
+
+| Guideline | Details |
+| --------- | ------- |
+| **Log immediately** | Write findings within 2 research actions — don't wait |
+| **Include sources** | Always note where information came from (URL, file, command output) |
+| **Track all errors** | Every error and its resolution, even "obvious" ones |
+| **Never repeat failures** | Check the Error Log before retrying — mutate the approach |
+| **Keep PLANS.md clean** | Raw external content belongs here, not in the execution plan |
