@@ -11,7 +11,7 @@ Research results, discoveries, and external content collected during project wor
 ### planning-with-files skill analysis
 - **Source:** https://github.com/OthmanAdi/planning-with-files
 - **Date:** 2026-03-22
-- **Summary:** Community skill (v2.26.1) implementing Manus-style file-based planning with three files (task_plan.md, findings.md, progress.md). Key strengths borrowed into project-init-iterate: auto-recovery hooks (UserPromptSubmit, PostToolUse), FINDINGS.md separation for security, 2-Action Rule, Read Before Decide, 3-Strike Error Protocol. Task-centric (per-task) vs our project-centric (long-lived) approach.
+- **Summary:** Community skill (v2.26.1) implementing Manus-style file-based planning with three files (task_plan.md, findings.md, progress.md). Key strengths borrowed into context-harness: auto-recovery hooks (UserPromptSubmit, PostToolUse), FINDINGS.md separation for security, 2-Action Rule, Read Before Decide, 3-Strike Error Protocol. Task-centric (per-task) vs our project-centric (long-lived) approach.
 
 ### find-skills ecosystem
 - **Source:** https://github.com/vercel-labs/skills
@@ -25,8 +25,12 @@ Research results, discoveries, and external content collected during project wor
   **Impact:** Can use both package managers freely based on package availability.
 
 - **Observation:** Hooks in SKILL.md YAML frontmatter are auto-executed by Claude Code
-  **Evidence:** After deploying updated project-init-iterate with hooks, the UserPromptSubmit hook fired successfully on next prompt (showed PLANS.md status and FINDINGS.md tail).
+  **Evidence:** After deploying updated context-harness with hooks, the UserPromptSubmit hook fired successfully on next prompt (showed PLANS.md status and FINDINGS.md tail).
   **Impact:** No need for separate settings.json hook configuration for skill-defined hooks.
+
+- **Observation:** APM resolves GitHub dependencies directly without needing a local path override, and fetches them on `apm install`.
+  **Evidence:** Set `fantasy-cc/context-harness` in `apm.yml`, and `apm install` dynamically pulled it into `.github/skills`.
+  **Impact:** Enables smooth extraction of custom generic skills to public Github packages while retaining them seamlessly in the central agent configuration.
 
 ## Error Log
 | Error | Context | Attempt | Resolution | Date |

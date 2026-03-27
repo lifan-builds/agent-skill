@@ -11,7 +11,7 @@
 
 ## Project Structure
 - `apm.yml`: The core manifest detailing skills (APM + GitHub), MCP servers, and local paths.
-- `project-init-iterate/`: Custom skill for generating/updating project context docs (AGENTS.md, PLANS.md, FINDINGS.md, README.md) with auto-recovery hooks.
+- `context-harness/`: Custom skill for generating/updating project context docs (AGENTS.md, PLANS.md, FINDINGS.md, EVALUATION.md, README.md) with auto-recovery hooks.
 - `apm_modules/`: Downloaded APM dependencies (obra/superpowers, etc.). Gitignored.
 - `.claude/skills/`, `.github/skills/`: Auto-generated compiled output folders created by APM.
 - `~/.agents/skills/find-skills`: Globally installed via skills CLI, symlinked into Claude Code.
@@ -21,7 +21,7 @@
 
 | Name | Type | Manager | Description |
 |------|------|---------|-------------|
-| `project-init-iterate` | Skill (local) | APM | Project docs generation with FINDINGS.md and context management hooks |
+| `context-harness` | Skill (local) | APM | Project docs generation with FINDINGS.md and context management hooks |
 | `obra/superpowers` | Skill (GitHub) | APM | Agentic dev methodology — brainstorming, TDD, code review, worktrees (14 sub-skills) |
 | `find-skills` | Skill (global) | skills CLI | Discovers and installs skills from the open agent skills ecosystem |
 | `sequential-thinking` | MCP | APM | Structured reasoning server |

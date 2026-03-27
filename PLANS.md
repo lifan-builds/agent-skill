@@ -11,12 +11,12 @@ Establish a single, APM-powered repository that centrally manages agent skills a
 - [x] APM Initialization and `apm.yml` configuration
 - [x] First `apm install` and lockfile generation
 - [x] Creation of symlink commands for global IDE hookups
-- [x] Run `project-init-iterate` to bootstrap `AGENTS.md`, `PLANS.md`, and `README.md`
-- [x] (2026-03-22) Enhanced `project-init-iterate` with FINDINGS.md, auto-recovery hooks, and context management rules (2-Action Rule, Read Before Decide, 3-Strike Error Protocol)
+- [x] Run `context-harness` to bootstrap `AGENTS.md`, `PLANS.md`, and `README.md`
+- [x] (2026-03-22) Enhanced `context-harness` with FINDINGS.md, auto-recovery hooks, and context management rules (2-Action Rule, Read Before Decide, 3-Strike Error Protocol)
 - [x] (2026-03-22) Replaced puppeteer MCP with Anthropic's official playwright MCP server
 - [x] (2026-03-22) Installed `obra/superpowers` via APM (14 sub-skills, 6 hooks)
-- [x] (2026-03-22) Installed `find-skills` via skills CLI (globally symlinked into Claude Code)
-- [x] (2026-03-22) Created `FINDINGS.md` for research/discovery tracking
+- [x] (2026-03-26) Renamed local skill to `context-harness` and generated `EVALUATION.md`.
+- [x] (2026-03-26) Extracted `context-harness` into its own standalone GitHub repository (`fantasy-cc/context-harness`) and updated `apm.yml` to pull from remote.
 
 ## Surprises & Discoveries
 - APM does not inherently contain an `antigravity` compilation target, so we opted to route Google Antigravity to the `.github/skills` compilation using symlinks, which effectively acts as a universal agent output.
@@ -33,10 +33,10 @@ Establish a single, APM-powered repository that centrally manages agent skills a
 - **FINDINGS.md as security boundary**: External content separated from PLANS.md to prevent prompt injection via auto-read hooks.
 
 ## Outcomes & Retrospective
-The core transition to an APM-based architecture has successfully replaced handwritten copying scripts. The toolkit now includes 3 skills (project-init-iterate, superpowers, find-skills) and 3 MCP servers (sequential-thinking, github-mcp, playwright), with auto-recovery hooks for session continuity.
+The core transition to an APM-based architecture has successfully replaced handwritten copying scripts. The toolkit now includes 3 skills (context-harness, superpowers, find-skills) and 3 MCP servers (sequential-thinking, github-mcp, playwright), with auto-recovery hooks for session continuity. The `context-harness` skill has been upgraded to support explicit evaluation contracts (`EVALUATION.md`) and extracted to a standalone public repository to be shared independently.
 
 ## Context and Orientation
-The repository consists of `apm.yml` for dependencies, local subdirectories (e.g. `project-init-iterate/`) for custom skills, and `apm_modules/` for downloaded dependencies. Skills are also installed globally via the skills CLI (`~/.agents/skills/`). The project-init-iterate skill now generates four documents (AGENTS.md, PLANS.md, FINDINGS.md, README.md) with context management rules borrowed from the Manus-style planning methodology.
+The repository consists of `apm.yml` for dependencies, local subdirectories (e.g. `context-harness/`) for custom skills, and `apm_modules/` for downloaded dependencies. Skills are also installed globally via the skills CLI (`~/.agents/skills/`). The context-harness skill now generates four documents (AGENTS.md, PLANS.md, FINDINGS.md, README.md) with context management rules borrowed from the Manus-style planning methodology.
 
 ## Plan of Work
 - Future tasks involve adding SSH auth functionality so private `git@` repos can be downloaded.

@@ -1,11 +1,12 @@
 name: lfan-global-toolkit
 version: 1.0.0
 compilation:
-  target: all
+  target:
+    - cursor
+    - claude
 dependencies:
   apm:
-  - path: ./project-init-iterate
-    alias: project-init-iterate
+  - fantasy-cc/context-harness
   - obra/superpowers
   mcp:
   - name: sequential-thinking
@@ -29,3 +30,19 @@ dependencies:
     args:
     - -y
     - '@anthropic-ai/mcp-server-playwright'
+
+  - name: context7
+    registry: false
+    transport: stdio
+    command: npx
+    args:
+    - -y
+    - '@upstash/context7-mcp@latest'
+
+  - name: nitan-mcp
+    registry: false
+    transport: stdio
+    command: npx
+    args:
+    - -y
+    - '@nitansde/mcp@latest'

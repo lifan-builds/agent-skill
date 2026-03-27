@@ -22,12 +22,15 @@ pip install apm-cli
 git clone https://github.com/fantasy-cc/agent-skill.git ~/agent-skills
 cd ~/agent-skills
 
-# 3. Install APM dependencies (skills + MCP servers)
-apm install
-
-# 4. Install skills-CLI packages (not managed by APM)
-npx skills add vercel-labs/skills@find-skills -g -y
+# 3. Deploy everything (APM install + global MCP + skill symlinks + skills-CLI)
+./deploy.sh
 ```
+
+The deploy script handles everything in one command:
+- Runs `apm install` to resolve dependencies
+- Syncs MCP servers from `apm.yml` into `~/.claude/.mcp.json` (global)
+- Symlinks skills to Claude Code, Cursor, and Antigravity global dirs
+- Installs skills-CLI packages (e.g., find-skills)
 
 ### Usage
 To apply these skills globally across all your projects, link your global IDE directories to this repository's APM output:
@@ -35,15 +38,15 @@ To apply these skills globally across all your projects, link your global IDE di
 ```bash
 # Link Google Antigravity
 mkdir -p ~/.gemini/antigravity/skills
-ln -snf ~/Project/agent_skill/.github/skills/project-init-iterate ~/.gemini/antigravity/skills/project-init-iterate
+ln -snf ~/Project/agent_skill/.github/skills/context-harness ~/.gemini/antigravity/skills/context-harness
 
 # Link Cursor
 mkdir -p ~/.cursor/skills
-ln -snf ~/Project/agent_skill/.github/skills/project-init-iterate ~/.cursor/skills/project-init-iterate
+ln -snf ~/Project/agent_skill/.github/skills/context-harness ~/.cursor/skills/context-harness
 
 # Link Claude Code
 mkdir -p ~/.claude/skills
-ln -snf ~/Project/agent_skill/.claude/skills/project-init-iterate ~/.claude/skills/project-init-iterate
+ln -snf ~/Project/agent_skill/.claude/skills/context-harness ~/.claude/skills/context-harness
 ```
 
 ## Installed Packages
@@ -52,7 +55,7 @@ ln -snf ~/Project/agent_skill/.claude/skills/project-init-iterate ~/.claude/skil
 
 | Skill | Manager | Description |
 |-------|---------|-------------|
-| [`project-init-iterate`](project-init-iterate/) | APM (local) | Generate and maintain project context documents (AGENTS.md, PLANS.md, FINDINGS.md, README.md) with auto-recovery hooks and context management rules |
+| [`context-harness`](context-harness/) | APM (local) | Generate and maintain project context documents (AGENTS.md, PLANS.md, FINDINGS.md, EVALUATION.md, README.md) with auto-recovery hooks and context management rules |
 | [`obra/superpowers`](https://github.com/obra/superpowers) | APM (GitHub) | Agentic dev methodology — brainstorming, TDD, code review, parallel agents, git worktrees (14 sub-skills) |
 | [`find-skills`](https://github.com/vercel-labs/skills) | skills CLI | Discovers and installs skills from the open agent skills ecosystem |
 
@@ -83,7 +86,7 @@ npx skills add <owner>/<repo>@<skill-name> -g -y
 ## Project Structure
 
 - `apm.yml` — Central manifest defining skills and MCP server dependencies
-- `project-init-iterate/` — Custom skill for project context document generation
+- `context-harness/` — Custom skill for project context document generation
 - `apm_modules/` — Downloaded APM dependencies (gitignored)
 - `AGENTS.md` — AI agent context file for this repository
 - `PLANS.md` — Living execution plan tracking ongoing work
