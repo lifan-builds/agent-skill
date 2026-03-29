@@ -1,4 +1,4 @@
-name: lfan-global-toolkit
+name: personal-agent-setup-manager
 version: 1.0.0
 compilation:
   target:
@@ -29,7 +29,7 @@ dependencies:
     command: npx
     args:
     - -y
-    - '@anthropic-ai/mcp-server-playwright'
+    - '@playwright/mcp@latest'
 
   - name: context7
     registry: false
@@ -46,3 +46,13 @@ dependencies:
     args:
     - -y
     - '@nitansde/mcp@latest'
+
+  - name: notion-mcp
+    registry: false
+    transport: stdio
+    command: npx
+    args:
+    - -y
+    - '@notionhq/notion-mcp-server'
+    env:
+      NOTION_API_TOKEN: "YOUR_NOTION_API_TOKEN_HERE"
