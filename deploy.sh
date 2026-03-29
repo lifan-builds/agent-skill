@@ -61,10 +61,18 @@ added, skipped = [], []
 for server in mcp_servers:
     name = server["name"]
     entry = {"command": server["command"], "args": server["args"]}
+    if "env" in server:
+        entry["env"] = server["env"]
+    if "disabled" in server:
+        entry["disabled"] = server["disabled"]
+        
     if name in mcp_config["mcpServers"]:
         # Update if config differs
         existing = mcp_config["mcpServers"][name]
-        if existing.get("command") == entry["command"] and existing.get("args") == entry["args"]:
+        if existing.get("command") == entry.get("command") and \
+           existing.get("args") == entry.get("args") and \
+           existing.get("env") == entry.get("env") and \
+           existing.get("disabled") == entry.get("disabled"):
             skipped.append(name)
             continue
     mcp_config["mcpServers"][name] = entry
@@ -113,8 +121,8 @@ for skill_dir in "$REPO_DIR/.github/skills"/*/; do
     fi
 done
 
-# Gemini/Antigravity skills — global skills live at ~/.gemini/skills/
-GEMINI_GLOBAL_SKILLS="$HOME/.gemini/skills"
+# Gemini/Antigravity skills — global skills live at ~/.gemini/antigravity/skills/
+GEMINI_GLOBAL_SKILLS="$GEMINI_DIR/skills"
 mkdir -p "$GEMINI_GLOBAL_SKILLS"
 for skill_dir in "$REPO_DIR/.github/skills"/*/; do
     [ -d "$skill_dir" ] || continue
@@ -149,7 +157,7 @@ rm -rf "$REPO_DIR/.vscode" 2>/dev/null || true
 # ---------- Done ----------
 echo ""
 info "Deployment complete!"
-echo "  Skills symlinked to: Claude Code, Cursor, Antigravity (~/.gemini/skills/)"
+echo "  Skills symlinked to: Claude Code, Cursor, Antigravity (~/.gemini/antigravity/skills/)"
 echo "  MCP servers synced to: $CLAUDE_MCP, $GEMINI_DIR/mcp_config.json"
 echo ""
 echo "  Restart your AI IDEs to pick up the new skills and MCP servers."
