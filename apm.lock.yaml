@@ -1,5 +1,5 @@
 lockfile_version: '1'
-generated_at: '2026-03-27T02:00:30.408831+00:00'
+generated_at: '2026-04-04T21:12:00.730933+00:00'
 apm_version: 0.8.3
 dependencies:
 - repo_url: fantasy-cc/context-harness
@@ -23,6 +23,7 @@ mcp_servers:
 - context7
 - github-mcp
 - nitan-mcp
+- notion-mcp
 - playwright
 - sequential-thinking
 mcp_configs:
@@ -50,12 +51,20 @@ mcp_configs:
     - '@nitansde/mcp@latest'
     registry: false
     command: npx
+  notion-mcp:
+    name: notion-mcp
+    transport: stdio
+    args:
+    - -y
+    - '@notionhq/notion-mcp-server'
+    registry: false
+    command: npx
   playwright:
     name: playwright
     transport: stdio
     args:
     - -y
-    - '@anthropic-ai/mcp-server-playwright'
+    - '@playwright/mcp@latest'
     registry: false
     command: npx
   sequential-thinking:

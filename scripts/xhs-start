@@ -1,0 +1,28 @@
+#!/usr/bin/env bash
+# Start the xiaohongshu-mcp Go server in the background.
+# Serves MCP over HTTP at http://localhost:18060/mcp
+set -euo pipefail
+
+REPO_DIR="$(cd "$(dirname "$0")/.." && pwd)"
+BIN="$REPO_DIR/bin/xiaohongshu-mcp"
+LOG_DIR="$HOME/.xiaohongshu-mcp"
+MCP_URL="http://localhost:18060/mcp"
+
+if [ ! -x "$BIN" ]; then
+    echo "Error: $BIN not found. Run deploy.sh first." >&2
+    exit 1
+fi
+
+mkdir -p "$LOG_DIR"
+
+# MCP expects POST; GET /mcp returns 405 even when healthy.
+if curl -s -o /dev/null -X POST "$MCP_URL" \
+    -H "Content-Type: application/json" \
+    -d '{"jsonrpc":"2.0","method":"initialize","params":{},"id":1}'; then
+    echo "xiaohongshu-mcp is already running at $MCP_URL"
+    exit 0
+fi
+
+echo "Starting xiaohongshu-mcp server..."
+(cd "$REPO_DIR" && nohup "$BIN" > "$LOG_DIR/server.log" 2>&1 &)
+echo "Started. Log: $LOG_DIR/server.log"

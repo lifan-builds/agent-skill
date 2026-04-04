@@ -1,0 +1,16 @@
+#!/usr/bin/env bash
+# Re-run the xiaohongshu login flow when session expires.
+# Opens a browser window for QR code / credential login.
+set -euo pipefail
+
+REPO_DIR="$(cd "$(dirname "$0")/.." && pwd)"
+BIN="$REPO_DIR/bin/xiaohongshu-login"
+
+if [ ! -x "$BIN" ]; then
+    echo "Error: $BIN not found. Run deploy.sh first." >&2
+    exit 1
+fi
+
+echo "Opening Xiaohongshu login browser..."
+cd "$REPO_DIR"
+"$BIN"

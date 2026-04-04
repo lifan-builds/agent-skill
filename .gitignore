@@ -22,3 +22,9 @@ apm_modules/
 .github/
 .agent/
 .vscode/mcp.json
+
+# Xiaohongshu MCP binaries (platform-specific, downloaded by deploy.sh)
+bin/
+
+# Xiaohongshu MCP local session state
+cookies.json

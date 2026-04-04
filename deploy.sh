@@ -3,21 +3,77 @@ set -euo pipefail
 
 REPO_DIR="$(cd "$(dirname "$0")" && pwd)"
 CLAUDE_DIR="$HOME/.claude"
-CLAUDE_MCP="$CLAUDE_DIR/.mcp.json"
+CLAUDE_MCP="$HOME/.claude.json"
 CURSOR_DIR="$HOME/.cursor"
+CURSOR_MCP="$CURSOR_DIR/mcp.json"
+WORKSPACE_CURSOR_MCP="$REPO_DIR/.cursor/mcp.json"
 GEMINI_DIR="$HOME/.gemini/antigravity"
+XHS_BIN="$REPO_DIR/bin/xiaohongshu-mcp"
+XHS_MCP_URL="http://localhost:18060/mcp"
 
 # ---------- helpers ----------
 info()  { printf '\033[1;34m==>\033[0m %s\n' "$1"; }
 ok()    { printf '\033[1;32m  +\033[0m %s\n' "$1"; }
 warn()  { printf '\033[1;33m  !\033[0m %s\n' "$1"; }
 
+# Ensure an HTTP MCP entry exists in a JSON config file.
+ensure_http_mcp() {
+python3 - "$1" "$2" "$3" << 'PYEOF'
+import json, os, sys
+
+mcp_path, name, url = sys.argv[1:4]
+
+if os.path.exists(mcp_path):
+    with open(mcp_path) as f:
+        try:
+            config = json.load(f)
+        except json.JSONDecodeError:
+            config = {}
+else:
+    config = {}
+
+config.setdefault("mcpServers", {})
+entry = {"type": "http", "url": url}
+
+if config["mcpServers"].get(name) == entry:
+    print(f"  = {name} (unchanged)")
+    sys.exit(0)
+
+config["mcpServers"][name] = entry
+with open(mcp_path, "w") as f:
+    json.dump(config, f, indent=2)
+    f.write("\n")
+
+print(f"  + {name}")
+PYEOF
+}
+
 # ---------- 1. APM install ----------
 info "Running apm install..."
 (cd "$REPO_DIR" && apm install)
 
+# APM generates a workspace Cursor MCP config, but this repo deploys a
+# machine-wide Cursor config. Removing the workspace file avoids duplicate
+# registrations when this repo is open in Cursor.
+if [ -f "$WORKSPACE_CURSOR_MCP" ]; then
+    rm -f "$WORKSPACE_CURSOR_MCP"
+    ok "Removed workspace Cursor MCP config"
+fi
+
+# Xiaohongshu MCP: Go binary server (xpzouying/xiaohongshu-mcp), HTTP on localhost:18060
+info "Checking xiaohongshu-mcp Go binary..."
+if [ -x "$XHS_BIN" ]; then
+    chmod +x "$REPO_DIR/scripts/xhs-start" "$REPO_DIR/scripts/xhs-relogin"
+    ok "xiaohongshu-mcp binary found at $XHS_BIN"
+    ok "Use 'scripts/xhs-relogin' to authenticate, 'scripts/xhs-start' to start the server"
+else
+    warn "xiaohongshu-mcp binary not found at $XHS_BIN"
+    warn "Download from: https://github.com/xpzouying/xiaohongshu-mcp/releases"
+    warn "Place darwin-arm64 binaries in $REPO_DIR/bin/ and chmod +x them"
+fi
+
 # ---------- 2. Sync MCP servers to global configs ----------
-for TARGET_MCP in "$CLAUDE_MCP" "$GEMINI_DIR/mcp_config.json"; do
+for TARGET_MCP in "$CLAUDE_MCP" "$CURSOR_MCP" "$GEMINI_DIR/mcp_config.json"; do
 info "Syncing MCP servers to $TARGET_MCP..."
 
 python3 - "$REPO_DIR/apm.yml" "$TARGET_MCP" << 'PYEOF'
@@ -90,6 +146,12 @@ for name in skipped:
 PYEOF
 done
 
+if [ -x "$XHS_BIN" ]; then
+info "Ensuring optional Xiaohongshu MCP config..."
+ensure_http_mcp "$CLAUDE_MCP" "xiaohongshu-mcp" "$XHS_MCP_URL"
+ensure_http_mcp "$CURSOR_MCP" "xiaohongshu-mcp" "$XHS_MCP_URL"
+fi
+
 # ---------- 3. Symlink skills globally ----------
 info "Setting up global skill symlinks..."
 
@@ -158,6 +220,6 @@ rm -rf "$REPO_DIR/.vscode" 2>/dev/null || true
 echo ""
 info "Deployment complete!"
 echo "  Skills symlinked to: Claude Code, Cursor, Antigravity (~/.gemini/antigravity/skills/)"
-echo "  MCP servers synced to: $CLAUDE_MCP, $GEMINI_DIR/mcp_config.json"
+echo "  MCP servers synced to: $CLAUDE_MCP, $CURSOR_MCP, $GEMINI_DIR/mcp_config.json"
 echo ""
 echo "  Restart your AI IDEs to pick up the new skills and MCP servers."

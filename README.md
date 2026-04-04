@@ -1,98 +1,82 @@
-# agent-skill
+# 🤖 Personal Agent Setup Manager
 
-A curated collection of AI agent skills and MCP servers — centrally managed and globally deployed to all local IDEs via APM and the skills CLI.
+A centralized configuration repository for managing AI agent skills and MCP servers cross-platform. This project ensures that **Claude Code**, **Cursor**, and **Google Antigravity** share identical, high-performance developer configurations on any machine.
 
-## Getting Started
+## 🚀 Overview
+
+This repository acts as a single point of truth for your agentic development environment. It uses [Agent Package Manager (APM)](https://github.com/microsoft/apm) and the [skills CLI](https://github.com/vercel-labs/skills) to resolve dependencies and deploy them globally via symlinks.
+
+### Key Platforms Supported
+- **Claude Code**: Industry-leading agentic terminal interface.
+- **Cursor**: The AI-first code editor.
+- **Google Antigravity**: Advanced agentic coding assistant.
+
+## 🛠️ Getting Started
 
 ### Prerequisites
-- Python 3.8+ (for installing APM)
-- Node.js 18+ (for MCP servers and skills CLI)
-- Git
-- Access to Claude Code, Cursor, or Google Antigravity
+- **Python 3.8+** (for `apm-cli`)
+- **Node.js 18+** (for MCP servers and `skills`)
+- **Git**
 
-### Installation
-
-This repository uses [Agent Package Manager (APM)](https://github.com/microsoft/apm) and the [skills CLI](https://github.com/vercel-labs/skills) to manage dependencies.
+### Installation & Deployment
 
 ```bash
-# 1. Install APM CLI (if not already installed)
+# 1. Clone the repository
+git clone https://github.com/fantasy-cc/agent-skill.git ~/Project/personal-agent-setup-manager
+cd ~/Project/personal-agent-setup-manager
+
+# 2. Install APM CLI (if not already installed)
 pip install apm-cli
 
-# 2. Clone the repository
-git clone https://github.com/fantasy-cc/agent-skill.git ~/agent-skills
-cd ~/agent-skills
-
-# 3. Deploy everything (APM install + global MCP + skill symlinks + skills-CLI)
+# 3. Deploy everything
 ./deploy.sh
 ```
 
-The deploy script handles everything in one command:
-- Runs `apm install` to resolve dependencies
-- Syncs MCP servers from `apm.yml` into `~/.claude/.mcp.json` (global)
-- Symlinks skills to Claude Code, Cursor, and Antigravity global dirs
-- Installs skills-CLI packages (e.g., find-skills)
+The `deploy.sh` script automates the entire setup:
+1. Runs `apm install` to fetch remote skills.
+2. Syncs MCP server configurations to **Claude** (`~/.claude.json`), **Cursor** (`~/.cursor/mcp.json`), and **Antigravity** (`~/.gemini/antigravity/mcp_config.json`). Removes the repo-local `.cursor/mcp.json` after APM so Cursor does not register MCP servers twice.
+3. Checks for the Xiaohongshu Go binary in `bin/` and ensures the optional `xiaohongshu-mcp` HTTP entry points at `http://localhost:18060/mcp` in Claude and Cursor.
+4. Creates symlinks from local modules to global IDE skill directories.
+5. Installs global packages via the skills CLI (`find-skills`).
 
-### Usage
-To apply these skills globally across all your projects, link your global IDE directories to this repository's APM output:
+## 📦 Managed Assets
 
-```bash
-# Link Google Antigravity
-mkdir -p ~/.gemini/antigravity/skills
-ln -snf ~/Project/agent_skill/.github/skills/context-harness ~/.gemini/antigravity/skills/context-harness
+### 🧠 Installed Skills
+| Name | Source | Description |
+|------|--------|-------------|
+| `context-harness` | Local | Maintains project context (AGENTS.md, PLANS.md, etc.) |
+| `obra/superpowers` | GitHub | Advanced dev methodology (TDD, brainstorming, worktrees) |
+| `find-skills` | skills CLI | Discovery tool for the agent skills ecosystem |
 
-# Link Cursor
-mkdir -p ~/.cursor/skills
-ln -snf ~/Project/agent_skill/.github/skills/context-harness ~/.cursor/skills/context-harness
+### 🔌 MCP Servers
+Servers listed in `apm.yml` are merged into your global MCP configs when you run `./deploy.sh`:
+- **`sequential-thinking`**: Structured reasoning for complex problem-solving.
+- **`github-mcp`**: Full GitHub integration (issues, PRs, repositories).
+- **`playwright`**: Browser automation via the official Playwright MCP package.
+- **`context7`**: Real-time documentation and code example retrieval.
+- **`nitan-mcp`**: Community MCP (`@nitansde/mcp`).
+- **`notion-mcp`**: Official Notion integration.
 
-# Link Claude Code
-mkdir -p ~/.claude/skills
-ln -snf ~/Project/agent_skill/.claude/skills/context-harness ~/.claude/skills/context-harness
-```
+**Xiaohongshu (optional):** Not declared in `apm.yml`. Uses [xpzouying/xiaohongshu-mcp](https://github.com/xpzouying/xiaohongshu-mcp) Go binary in `bin/`. Run `scripts/xhs-relogin` once to authenticate, then `scripts/xhs-start` to start the server (HTTP on `localhost:18060`). `deploy.sh` ensures the HTTP MCP entry exists in both Claude Code and Cursor. The generated `cookies.json` is local session state and should never be committed.
 
-## Installed Packages
+## 🏗️ Project Structure
 
-### Skills
+- `apm.yml` — The heart of the configuration. Define your skills and MCPs here.
+- `deploy.sh` — The deployment engine that syncs this repo to your system.
+- `bin/` — Pre-built Go binaries for Xiaohongshu MCP.
+- `scripts/` — Helper scripts (`xhs-start`, `xhs-relogin`) for Xiaohongshu MCP management.
+- `context-harness/` — Local skill definitions for project management.
+- `AGENTS.md` — Core AI context for this repository.
+- `PLANS.md` — Active development roadmap.
+- `FINDINGS.md` — Research logs and discovery notes.
+- `EVALUATION.md` — Verification contracts and evaluation log.
 
-| Skill | Manager | Description |
-|-------|---------|-------------|
-| [`context-harness`](context-harness/) | APM (local) | Generate and maintain project context documents (AGENTS.md, PLANS.md, FINDINGS.md, EVALUATION.md, README.md) with auto-recovery hooks and context management rules |
-| [`obra/superpowers`](https://github.com/obra/superpowers) | APM (GitHub) | Agentic dev methodology — brainstorming, TDD, code review, parallel agents, git worktrees (14 sub-skills) |
-| [`find-skills`](https://github.com/vercel-labs/skills) | skills CLI | Discovers and installs skills from the open agent skills ecosystem |
+## 🧪 Development
 
-### MCP Servers
+To add a new skill to your toolkit:
+1. Create a subfolder with a `SKILL.md` (check `context-harness/` for reference).
+2. Add the dependency to `apm.yml`.
+3. Run `./deploy.sh` to update your global agent environment.
 
-| Server | Description |
-|--------|-------------|
-| `sequential-thinking` | Structured reasoning via MCP |
-| `github-mcp` | GitHub API integration (issues, PRs, repos) |
-| `playwright` | Browser automation via Anthropic's official Playwright server |
-
-## Development
-
-Want to add a new skill?
-
-1. Create a new folder with a descriptive name (e.g., `api-scaffolder/`)
-2. Add a `SKILL.md` with YAML frontmatter (`name`, `description`) and detailed instructions
-3. Include any supporting files (templates, examples, scripts)
-4. Add the skill to `apm.yml` dependencies under the `apm:` block
-5. Run `apm install` to test that the compilation succeeds
-6. Open a Pull Request
-
-For skills from the vercel-labs ecosystem, install with:
-```bash
-npx skills add <owner>/<repo>@<skill-name> -g -y
-```
-
-## Project Structure
-
-- `apm.yml` — Central manifest defining skills and MCP server dependencies
-- `context-harness/` — Custom skill for project context document generation
-- `apm_modules/` — Downloaded APM dependencies (gitignored)
-- `AGENTS.md` — AI agent context file for this repository
-- `PLANS.md` — Living execution plan tracking ongoing work
-- `FINDINGS.md` — Research log, discoveries, and error tracker
-- `.claude/`, `.cursor/`, `.github/` — Compiled output for each IDE
-
-## License
-
-[MIT](LICENSE)
+---
+*Maintained by lfan. Powered by APM.*
