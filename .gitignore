@@ -11,6 +11,7 @@ Thumbs.db
 
 # Misc
 .env
+__pycache__/
 
 
 # APM dependencies
