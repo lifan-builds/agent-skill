@@ -1,9 +1,10 @@
-name: personal-agent-setup-manager
+name: agent-nexus
 version: 1.0.0
 compilation:
   target:
     - cursor
     - claude
+    - antigravity
 dependencies:
   apm:
   - fantasy-cc/context-harness
@@ -16,13 +17,6 @@ dependencies:
     args:
     - -y
     - '@modelcontextprotocol/server-sequential-thinking'
-  - name: github-mcp
-    registry: false
-    transport: stdio
-    command: npx
-    args:
-    - -y
-    - '@modelcontextprotocol/server-github'
   - name: playwright
     registry: false
     transport: stdio
@@ -46,6 +40,17 @@ dependencies:
     args:
     - -y
     - '@nitansde/mcp@latest'
+
+  # Optional MCPs — included only with `./deploy.sh --all` or
+  # when interactively confirmed during deploy.
+  optional_mcp:
+  - name: github-mcp
+    registry: false
+    transport: stdio
+    command: npx
+    args:
+    - -y
+    - '@modelcontextprotocol/server-github'
 
   - name: notion-mcp
     registry: false

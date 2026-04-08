@@ -1,4 +1,4 @@
-# personal-agent-setup-manager — Initial Bootstrap
+# agent-nexus — Initial Bootstrap
 
 This is a living document. Keep Progress, Surprises & Discoveries,
 Decision Log, and Outcomes & Retrospective up to date as work proceeds.

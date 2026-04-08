@@ -1,4 +1,4 @@
-# 🤖 Personal Agent Setup Manager
+# 🤖 Agent Nexus
 
 A centralized configuration repository for managing AI agent skills and MCP servers cross-platform. This project ensures that **Claude Code**, **Cursor**, and **Google Antigravity** share identical, high-performance developer configurations on any machine.
 
@@ -22,8 +22,8 @@ This repository acts as a single point of truth for your agentic development env
 
 ```bash
 # 1. Clone the repository
-git clone https://github.com/fantasy-cc/agent-skill.git ~/Project/personal-agent-setup-manager
-cd ~/Project/personal-agent-setup-manager
+git clone https://github.com/fantasy-cc/agent-nexus.git ~/Project/agent-nexus
+cd ~/Project/agent-nexus
 
 # 2. Install APM CLI (if not already installed)
 pip install apm-cli

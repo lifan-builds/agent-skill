@@ -1,5 +1,5 @@
 lockfile_version: '1'
-generated_at: '2026-04-04T21:12:35.438466+00:00'
+generated_at: '2026-04-08T19:09:31.732606+00:00'
 apm_version: 0.8.3
 dependencies:
 - repo_url: fantasy-cc/context-harness
@@ -21,9 +21,7 @@ dependencies:
   content_hash: sha256:b1182e9db82aeb5daeb7833807cd4db63b2f13efee99bfa88abd0bcc65635cb0
 mcp_servers:
 - context7
-- github-mcp
 - nitan-mcp
-- notion-mcp
 - playwright
 - sequential-thinking
 mcp_configs:
@@ -35,28 +33,12 @@ mcp_configs:
     - '@upstash/context7-mcp@latest'
     registry: false
     command: npx
-  github-mcp:
-    name: github-mcp
-    transport: stdio
-    args:
-    - -y
-    - '@modelcontextprotocol/server-github'
-    registry: false
-    command: npx
   nitan-mcp:
     name: nitan-mcp
     transport: stdio
     args:
     - -y
     - '@nitansde/mcp@latest'
-    registry: false
-    command: npx
-  notion-mcp:
-    name: notion-mcp
-    transport: stdio
-    args:
-    - -y
-    - '@notionhq/notion-mcp-server'
     registry: false
     command: npx
   playwright:
