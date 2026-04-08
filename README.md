@@ -22,7 +22,7 @@ This repository acts as a single point of truth for your agentic development env
 
 ```bash
 # 1. Clone the repository
-git clone https://github.com/fantasy-cc/agent-nexus.git ~/Project/agent-nexus
+git clone https://github.com/lifan-builds/agent-nexus.git ~/Project/agent-nexus
 cd ~/Project/agent-nexus
 
 # 2. Install APM CLI (if not already installed)
